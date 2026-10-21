@@ -12,9 +12,11 @@
         <link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
         <style>
-        #map {
-            width: 1473px;
-            height: 1231px;
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
         }
         </style>
         <title></title>
@@ -33,18 +35,20 @@
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
         <script src="js/leaflet.photon.js"></script>
-        <script src="data/FQHCpresenceincounty_0.js"></script>
+        <script src="data/FQHCsitepresenceincounty_0.js"></script>
         <script src="data/Highmentalhealthrisksocioeconomicscore_1.js"></script>
         <script src="data/Socioeconomicscoregroup_2.js"></script>
         <script src="data/Mentalhealthriskscoregroup_3.js"></script>
-        <script src="data/Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4.js"></script>
-        <script src="data/Socioeconomicscoregroupcopy_5.js"></script>
-        <script src="data/Socioeconomicscoregroup_6.js"></script>
-        <script src="data/Mentalhealthriskscoregroup_7.js"></script>
+        <script src="data/Highmentalhealthriskhighsocioeconomicscorehighworkforce_4.js"></script>
+        <script src="data/Highmentalhealthriskhighsocioeconomicscorelowworkforce_5.js"></script>
+        <script src="data/Mentalhealthworkforcegroup_6.js"></script>
+        <script src="data/Socioeconomicscoregroup_7.js"></script>
+        <script src="data/Mentalhealthriskscoregroup_8.js"></script>
+        <script src="data/ApexSBHC_9.js"></script>
         <script>
         var map = L.map('map', {
-            zoomControl:false, maxZoom:16, minZoom:5
-        }).fitBounds([[29.732439263321634,-86.59964560175999],[35.941139162992265,-79.16840267872053]]);
+            zoomControl:false, maxZoom:12, minZoom:5
+        }).fitBounds([[29.73243926332163,-86.59964560175999],[35.941139162992265,-79.16840267872053]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/qgis2web/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -126,8 +130,11 @@
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        function pop_FQHCpresenceincounty_0(feature, layer) {
+        function pop_FQHCsitepresenceincounty_0(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME10'] !== null ? autolinker.link(String(feature.properties['NAME10']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -136,26 +143,11 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_FQHCpresenceincounty_0_0(feature) {
+        function style_FQHCsitepresenceincounty_0_0(feature) {
             switch(String(feature.properties['county_2_FQHC_present'])) {
-                case '0':
-                    return {
-                pane: 'pane_FQHCpresenceincounty_0',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(230,85,13,1.0)',
-                interactive: false,
-            }
-                    break;
                 case '1':
                     return {
-                pane: 'pane_FQHCpresenceincounty_0',
+                pane: 'pane_FQHCsitepresenceincounty_0',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -165,12 +157,27 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(254,230,206,1.0)',
-                interactive: false,
+                interactive: true,
+            }
+                    break;
+                case '0':
+                    return {
+                pane: 'pane_FQHCsitepresenceincounty_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(230,85,13,1.0)',
+                interactive: true,
             }
                     break;
                 default:
                     return {
-                pane: 'pane_FQHCpresenceincounty_0',
+                pane: 'pane_FQHCsitepresenceincounty_0',
                 opacity: 1,
                 color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
@@ -180,27 +187,30 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(158,158,158,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
             }
         }
-        map.createPane('pane_FQHCpresenceincounty_0');
-        map.getPane('pane_FQHCpresenceincounty_0').style.zIndex = 400;
-        map.getPane('pane_FQHCpresenceincounty_0').style['mix-blend-mode'] = 'normal';
-        var layer_FQHCpresenceincounty_0 = new L.geoJson(json_FQHCpresenceincounty_0, {
+        map.createPane('pane_FQHCsitepresenceincounty_0');
+        map.getPane('pane_FQHCsitepresenceincounty_0').style.zIndex = 400;
+        map.getPane('pane_FQHCsitepresenceincounty_0').style['mix-blend-mode'] = 'normal';
+        var layer_FQHCsitepresenceincounty_0 = new L.geoJson(json_FQHCsitepresenceincounty_0, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_FQHCpresenceincounty_0',
-            layerName: 'layer_FQHCpresenceincounty_0',
-            pane: 'pane_FQHCpresenceincounty_0',
-            onEachFeature: pop_FQHCpresenceincounty_0,
-            style: style_FQHCpresenceincounty_0_0,
+            interactive: true,
+            dataVar: 'json_FQHCsitepresenceincounty_0',
+            layerName: 'layer_FQHCsitepresenceincounty_0',
+            pane: 'pane_FQHCsitepresenceincounty_0',
+            onEachFeature: pop_FQHCsitepresenceincounty_0,
+            style: style_FQHCsitepresenceincounty_0_0,
         });
-        bounds_group.addLayer(layer_FQHCpresenceincounty_0);
-        map.addLayer(layer_FQHCpresenceincounty_0);
+        bounds_group.addLayer(layer_FQHCsitepresenceincounty_0);
+        map.addLayer(layer_FQHCsitepresenceincounty_0);
         function pop_Highmentalhealthrisksocioeconomicscore_1(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME10'] !== null ? autolinker.link(String(feature.properties['NAME10']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -223,7 +233,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(230,85,13,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case 'false':
@@ -238,7 +248,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(254,230,206,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 default:
@@ -253,7 +263,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(158,158,158,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
             }
@@ -263,7 +273,7 @@
         map.getPane('pane_Highmentalhealthrisksocioeconomicscore_1').style['mix-blend-mode'] = 'normal';
         var layer_Highmentalhealthrisksocioeconomicscore_1 = new L.geoJson(json_Highmentalhealthrisksocioeconomicscore_1, {
             attribution: '',
-            interactive: false,
+            interactive: true,
             dataVar: 'json_Highmentalhealthrisksocioeconomicscore_1',
             layerName: 'layer_Highmentalhealthrisksocioeconomicscore_1',
             pane: 'pane_Highmentalhealthrisksocioeconomicscore_1',
@@ -274,6 +284,9 @@
         map.addLayer(layer_Highmentalhealthrisksocioeconomicscore_1);
         function pop_Socioeconomicscoregroup_2(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME10'] !== null ? autolinker.link(String(feature.properties['NAME10']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -296,7 +309,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(254,230,206,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '1':
@@ -311,7 +324,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(253,174,107,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '2':
@@ -326,7 +339,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(230,85,13,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 default:
@@ -341,7 +354,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(158,158,158,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
             }
@@ -351,7 +364,7 @@
         map.getPane('pane_Socioeconomicscoregroup_2').style['mix-blend-mode'] = 'normal';
         var layer_Socioeconomicscoregroup_2 = new L.geoJson(json_Socioeconomicscoregroup_2, {
             attribution: '',
-            interactive: false,
+            interactive: true,
             dataVar: 'json_Socioeconomicscoregroup_2',
             layerName: 'layer_Socioeconomicscoregroup_2',
             pane: 'pane_Socioeconomicscoregroup_2',
@@ -362,6 +375,9 @@
         map.addLayer(layer_Socioeconomicscoregroup_2);
         function pop_Mentalhealthriskscoregroup_3(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME10'] !== null ? autolinker.link(String(feature.properties['NAME10']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -448,7 +464,7 @@
         });
         bounds_group.addLayer(layer_Mentalhealthriskscoregroup_3);
         map.addLayer(layer_Mentalhealthriskscoregroup_3);
-        function pop_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4(feature, layer) {
+        function pop_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['System_Name'] !== null ? autolinker.link(String(feature.properties['System_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
@@ -457,19 +473,7 @@
                         <td colspan="2">' + (feature.properties['School_Name'] !== null ? autolinker.link(String(feature.properties['School_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Street'] !== null ? autolinker.link(String(feature.properties['Street']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['City'] !== null ? autolinker.link(String(feature.properties['City']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['ZIP'] !== null ? autolinker.link(String(feature.properties['ZIP']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['PHONE'] !== null ? autolinker.link(String(feature.properties['PHONE']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['WEBSITE'] !== null ? autolinker.link(String(feature.properties['WEBSITE']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['SCHID'] !== null ? autolinker.link(String(feature.properties['SCHID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -479,11 +483,11 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4_0(feature) {
-            switch(String(feature.properties['group_risk_supply_socio'])) {
+        function style_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4_0(feature) {
+            switch(String(feature.properties['school_Apex_fqhc_newpriority_group_risk_supply_socio_222'])) {
                 case '0':
                     return {
-                pane: 'pane_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4',
+                pane: 'pane_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4',
                 radius: 1.8,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -499,7 +503,7 @@
                     break;
                 case '1':
                     return {
-                pane: 'pane_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4',
+                pane: 'pane_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4',
                 radius: 3.8,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -515,28 +519,37 @@
                     break;
             }
         }
-        map.createPane('pane_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4');
-        map.getPane('pane_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4').style.zIndex = 404;
-        map.getPane('pane_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4').style['mix-blend-mode'] = 'normal';
-        var layer_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4 = new L.geoJson(json_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4, {
+        map.createPane('pane_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4');
+        map.getPane('pane_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4').style.zIndex = 404;
+        map.getPane('pane_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4').style['mix-blend-mode'] = 'normal';
+        var layer_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4 = new L.geoJson(json_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4',
-            layerName: 'layer_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4',
-            pane: 'pane_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4',
-            onEachFeature: pop_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4,
+            dataVar: 'json_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4',
+            layerName: 'layer_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4',
+            pane: 'pane_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4',
+            onEachFeature: pop_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4_0(feature));
+                return L.circleMarker(latlng, style_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4);
-        map.addLayer(layer_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4);
-        function pop_Socioeconomicscoregroupcopy_5(feature, layer) {
+        bounds_group.addLayer(layer_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4);
+        map.addLayer(layer_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4);
+        function pop_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['System_Name'] !== null ? autolinker.link(String(feature.properties['System_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School_Name'] !== null ? autolinker.link(String(feature.properties['School_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SCHID'] !== null ? autolinker.link(String(feature.properties['SCHID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -545,11 +558,86 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Socioeconomicscoregroupcopy_5_0(feature) {
+        function style_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5_0(feature) {
+            switch(String(feature.properties['group_risk_supply_socio'])) {
+                case '0':
+                    return {
+                pane: 'pane_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5',
+                radius: 1.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,236,244,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '1':
+                    return {
+                pane: 'pane_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5',
+                radius: 3.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(136,86,167,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5');
+        map.getPane('pane_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5').style.zIndex = 405;
+        map.getPane('pane_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5').style['mix-blend-mode'] = 'normal';
+        var layer_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5 = new L.geoJson(json_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5',
+            layerName: 'layer_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5',
+            pane: 'pane_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5',
+            onEachFeature: pop_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5);
+        map.addLayer(layer_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5);
+        function pop_Mentalhealthworkforcegroup_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['System_Name'] !== null ? autolinker.link(String(feature.properties['System_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School_Name'] !== null ? autolinker.link(String(feature.properties['School_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SCHID'] !== null ? autolinker.link(String(feature.properties['SCHID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_Mentalhealthworkforcegroup_6_0(feature) {
             switch(String(feature.properties['tertile_supply0'])) {
                 case '0':
                     return {
-                pane: 'pane_Socioeconomicscoregroupcopy_5',
+                pane: 'pane_Mentalhealthworkforcegroup_6',
                 radius: 3.6,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -560,12 +648,12 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(136,86,167,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '1':
                     return {
-                pane: 'pane_Socioeconomicscoregroupcopy_5',
+                pane: 'pane_Mentalhealthworkforcegroup_6',
                 radius: 2.8,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -576,12 +664,12 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(146,174,202,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '2':
                     return {
-                pane: 'pane_Socioeconomicscoregroupcopy_5',
+                pane: 'pane_Mentalhealthworkforcegroup_6',
                 radius: 1.6,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -592,33 +680,42 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(224,236,244,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
             }
         }
-        map.createPane('pane_Socioeconomicscoregroupcopy_5');
-        map.getPane('pane_Socioeconomicscoregroupcopy_5').style.zIndex = 405;
-        map.getPane('pane_Socioeconomicscoregroupcopy_5').style['mix-blend-mode'] = 'normal';
-        var layer_Socioeconomicscoregroupcopy_5 = new L.geoJson(json_Socioeconomicscoregroupcopy_5, {
+        map.createPane('pane_Mentalhealthworkforcegroup_6');
+        map.getPane('pane_Mentalhealthworkforcegroup_6').style.zIndex = 406;
+        map.getPane('pane_Mentalhealthworkforcegroup_6').style['mix-blend-mode'] = 'normal';
+        var layer_Mentalhealthworkforcegroup_6 = new L.geoJson(json_Mentalhealthworkforcegroup_6, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_Socioeconomicscoregroupcopy_5',
-            layerName: 'layer_Socioeconomicscoregroupcopy_5',
-            pane: 'pane_Socioeconomicscoregroupcopy_5',
-            onEachFeature: pop_Socioeconomicscoregroupcopy_5,
+            interactive: true,
+            dataVar: 'json_Mentalhealthworkforcegroup_6',
+            layerName: 'layer_Mentalhealthworkforcegroup_6',
+            pane: 'pane_Mentalhealthworkforcegroup_6',
+            onEachFeature: pop_Mentalhealthworkforcegroup_6,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Socioeconomicscoregroupcopy_5_0(feature));
+                return L.circleMarker(latlng, style_Mentalhealthworkforcegroup_6_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Socioeconomicscoregroupcopy_5);
-        map.addLayer(layer_Socioeconomicscoregroupcopy_5);
-        function pop_Socioeconomicscoregroup_6(feature, layer) {
+        bounds_group.addLayer(layer_Mentalhealthworkforcegroup_6);
+        map.addLayer(layer_Mentalhealthworkforcegroup_6);
+        function pop_Socioeconomicscoregroup_7(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['System_Name'] !== null ? autolinker.link(String(feature.properties['System_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School_Name'] !== null ? autolinker.link(String(feature.properties['School_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ST_SCHID'] !== null ? autolinker.link(String(feature.properties['ST_SCHID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -627,11 +724,11 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Socioeconomicscoregroup_6_0(feature) {
+        function style_Socioeconomicscoregroup_7_0(feature) {
             switch(String(feature.properties['tertile_socio0'])) {
                 case '0':
                     return {
-                pane: 'pane_Socioeconomicscoregroup_6',
+                pane: 'pane_Socioeconomicscoregroup_7',
                 radius: 1.6,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -642,12 +739,12 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(224,236,244,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '1':
                     return {
-                pane: 'pane_Socioeconomicscoregroup_6',
+                pane: 'pane_Socioeconomicscoregroup_7',
                 radius: 2.8,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -658,12 +755,12 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(146,174,202,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '2':
                     return {
-                pane: 'pane_Socioeconomicscoregroup_6',
+                pane: 'pane_Socioeconomicscoregroup_7',
                 radius: 3.6,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -674,33 +771,42 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(136,86,167,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
             }
         }
-        map.createPane('pane_Socioeconomicscoregroup_6');
-        map.getPane('pane_Socioeconomicscoregroup_6').style.zIndex = 406;
-        map.getPane('pane_Socioeconomicscoregroup_6').style['mix-blend-mode'] = 'normal';
-        var layer_Socioeconomicscoregroup_6 = new L.geoJson(json_Socioeconomicscoregroup_6, {
+        map.createPane('pane_Socioeconomicscoregroup_7');
+        map.getPane('pane_Socioeconomicscoregroup_7').style.zIndex = 407;
+        map.getPane('pane_Socioeconomicscoregroup_7').style['mix-blend-mode'] = 'normal';
+        var layer_Socioeconomicscoregroup_7 = new L.geoJson(json_Socioeconomicscoregroup_7, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_Socioeconomicscoregroup_6',
-            layerName: 'layer_Socioeconomicscoregroup_6',
-            pane: 'pane_Socioeconomicscoregroup_6',
-            onEachFeature: pop_Socioeconomicscoregroup_6,
+            interactive: true,
+            dataVar: 'json_Socioeconomicscoregroup_7',
+            layerName: 'layer_Socioeconomicscoregroup_7',
+            pane: 'pane_Socioeconomicscoregroup_7',
+            onEachFeature: pop_Socioeconomicscoregroup_7,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Socioeconomicscoregroup_6_0(feature));
+                return L.circleMarker(latlng, style_Socioeconomicscoregroup_7_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Socioeconomicscoregroup_6);
-        map.addLayer(layer_Socioeconomicscoregroup_6);
-        function pop_Mentalhealthriskscoregroup_7(feature, layer) {
+        bounds_group.addLayer(layer_Socioeconomicscoregroup_7);
+        map.addLayer(layer_Socioeconomicscoregroup_7);
+        function pop_Mentalhealthriskscoregroup_8(feature, layer) {
             var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['System_Name'] !== null ? autolinker.link(String(feature.properties['System_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School_Name'] !== null ? autolinker.link(String(feature.properties['School_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SCHID'] !== null ? autolinker.link(String(feature.properties['SCHID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -709,11 +815,11 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_Mentalhealthriskscoregroup_7_0(feature) {
+        function style_Mentalhealthriskscoregroup_8_0(feature) {
             switch(String(feature.properties['tertile_risk'])) {
                 case '0':
                     return {
-                pane: 'pane_Mentalhealthriskscoregroup_7',
+                pane: 'pane_Mentalhealthriskscoregroup_8',
                 radius: 1.6,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -724,12 +830,12 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(224,236,244,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '1':
                     return {
-                pane: 'pane_Mentalhealthriskscoregroup_7',
+                pane: 'pane_Mentalhealthriskscoregroup_8',
                 radius: 2.8,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -740,12 +846,12 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(146,174,202,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
                 case '2':
                     return {
-                pane: 'pane_Mentalhealthriskscoregroup_7',
+                pane: 'pane_Mentalhealthriskscoregroup_8',
                 radius: 3.6,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
@@ -756,40 +862,149 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(136,86,167,1.0)',
-                interactive: false,
+                interactive: true,
             }
                     break;
             }
         }
-        map.createPane('pane_Mentalhealthriskscoregroup_7');
-        map.getPane('pane_Mentalhealthriskscoregroup_7').style.zIndex = 407;
-        map.getPane('pane_Mentalhealthriskscoregroup_7').style['mix-blend-mode'] = 'normal';
-        var layer_Mentalhealthriskscoregroup_7 = new L.geoJson(json_Mentalhealthriskscoregroup_7, {
+        map.createPane('pane_Mentalhealthriskscoregroup_8');
+        map.getPane('pane_Mentalhealthriskscoregroup_8').style.zIndex = 408;
+        map.getPane('pane_Mentalhealthriskscoregroup_8').style['mix-blend-mode'] = 'normal';
+        var layer_Mentalhealthriskscoregroup_8 = new L.geoJson(json_Mentalhealthriskscoregroup_8, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_Mentalhealthriskscoregroup_7',
-            layerName: 'layer_Mentalhealthriskscoregroup_7',
-            pane: 'pane_Mentalhealthriskscoregroup_7',
-            onEachFeature: pop_Mentalhealthriskscoregroup_7,
+            interactive: true,
+            dataVar: 'json_Mentalhealthriskscoregroup_8',
+            layerName: 'layer_Mentalhealthriskscoregroup_8',
+            pane: 'pane_Mentalhealthriskscoregroup_8',
+            onEachFeature: pop_Mentalhealthriskscoregroup_8,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Mentalhealthriskscoregroup_7_0(feature));
+                return L.circleMarker(latlng, style_Mentalhealthriskscoregroup_8_0(feature));
             },
         });
-        bounds_group.addLayer(layer_Mentalhealthriskscoregroup_7);
-        map.addLayer(layer_Mentalhealthriskscoregroup_7);
+        bounds_group.addLayer(layer_Mentalhealthriskscoregroup_8);
+        map.addLayer(layer_Mentalhealthriskscoregroup_8);
+        function pop_ApexSBHC_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['System_Name'] !== null ? autolinker.link(String(feature.properties['System_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School_Name'] !== null ? autolinker.link(String(feature.properties['School_Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ST_SCHID'] !== null ? autolinker.link(String(feature.properties['ST_SCHID']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_ApexSBHC_9_0(feature) {
+            switch(String(feature.properties['school_Apex_fqhc_newpriority_Apex_SBHC'])) {
+                case 'Apex&SBHC':
+                    return {
+                pane: 'pane_ApexSBHC_9',
+                radius: 4.2,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(21,28,222,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Apex only':
+                    return {
+                pane: 'pane_ApexSBHC_9',
+                radius: 4.2,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(5,178,4,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SBHC only':
+                    return {
+                pane: 'pane_ApexSBHC_9',
+                radius: 4.2,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,90,208,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'None':
+                    return {
+                pane: 'pane_ApexSBHC_9',
+                radius: 3.8,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,236,244,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_ApexSBHC_9');
+        map.getPane('pane_ApexSBHC_9').style.zIndex = 409;
+        map.getPane('pane_ApexSBHC_9').style['mix-blend-mode'] = 'normal';
+        var layer_ApexSBHC_9 = new L.geoJson(json_ApexSBHC_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ApexSBHC_9',
+            layerName: 'layer_ApexSBHC_9',
+            pane: 'pane_ApexSBHC_9',
+            onEachFeature: pop_ApexSBHC_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ApexSBHC_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ApexSBHC_9);
+        map.addLayer(layer_ApexSBHC_9);
         var overlaysTree = [
-            {label: 'Mental health risk score group<br /><table><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_7_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_7_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_7_High2.png" /></td><td>High</td></tr></table>', layer: layer_Mentalhealthriskscoregroup_7},
-            {label: 'Socioeconomic score group<br /><table><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_6_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_6_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_6_High2.png" /></td><td>High</td></tr></table>', layer: layer_Socioeconomicscoregroup_6},
-            {label: 'Socioeconomic score group copy<br /><table><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroupcopy_5_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroupcopy_5_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroupcopy_5_High2.png" /></td><td>High</td></tr></table>', layer: layer_Socioeconomicscoregroupcopy_5},
-            {label: 'High mental health risk & high socioeconomic score & low workforce score<br /><table><tr><td style="text-align: center;"><img src="legend/Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4_No0.png" /></td><td>No</td></tr><tr><td style="text-align: center;"><img src="legend/Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4_Yes1.png" /></td><td>Yes</td></tr></table>', layer: layer_Highmentalhealthriskhighsocioeconomicscorelowworkforcescore_4},
+            {label: 'Apex & SBHC<br /><table><tr><td style="text-align: center;"><img src="legend/ApexSBHC_9_ApexSBHC0.png" /></td><td>Apex&SBHC</td></tr><tr><td style="text-align: center;"><img src="legend/ApexSBHC_9_Apexonly1.png" /></td><td>Apex only</td></tr><tr><td style="text-align: center;"><img src="legend/ApexSBHC_9_SBHConly2.png" /></td><td>SBHC only</td></tr><tr><td style="text-align: center;"><img src="legend/ApexSBHC_9_Neither3.png" /></td><td>Neither</td></tr></table>', layer: layer_ApexSBHC_9},
+            {label: 'Mental health risk score group<br /><table><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_8_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_8_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_8_High2.png" /></td><td>High</td></tr></table>', layer: layer_Mentalhealthriskscoregroup_8},
+            {label: 'Socioeconomic score group<br /><table><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_7_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_7_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_7_High2.png" /></td><td>High</td></tr></table>', layer: layer_Socioeconomicscoregroup_7},
+            {label: 'Mental health workforce group<br /><table><tr><td style="text-align: center;"><img src="legend/Mentalhealthworkforcegroup_6_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthworkforcegroup_6_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthworkforcegroup_6_High2.png" /></td><td>High</td></tr></table>', layer: layer_Mentalhealthworkforcegroup_6},
+            {label: 'High mental health risk & high socioeconomic score & low workforce<br /><table><tr><td style="text-align: center;"><img src="legend/Highmentalhealthriskhighsocioeconomicscorelowworkforce_5_No0.png" /></td><td>No</td></tr><tr><td style="text-align: center;"><img src="legend/Highmentalhealthriskhighsocioeconomicscorelowworkforce_5_Yes1.png" /></td><td>Yes</td></tr></table>', layer: layer_Highmentalhealthriskhighsocioeconomicscorelowworkforce_5},
+            {label: 'High mental health risk & high socioeconomic score & high workforce<br /><table><tr><td style="text-align: center;"><img src="legend/Highmentalhealthriskhighsocioeconomicscorehighworkforce_4_No0.png" /></td><td>No</td></tr><tr><td style="text-align: center;"><img src="legend/Highmentalhealthriskhighsocioeconomicscorehighworkforce_4_Yes1.png" /></td><td>Yes</td></tr></table>', layer: layer_Highmentalhealthriskhighsocioeconomicscorehighworkforce_4},
             {label: 'Mental health risk score group<br /><table><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_3_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_3_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_3_High2.png" /></td><td>High</td></tr><tr><td style="text-align: center;"><img src="legend/Mentalhealthriskscoregroup_3_Nonrural3.png" /></td><td>Non-rural</td></tr></table>', layer: layer_Mentalhealthriskscoregroup_3},
             {label: 'Socioeconomic score group<br /><table><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_2_Low0.png" /></td><td>Low</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_2_Middle1.png" /></td><td>Middle</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_2_High2.png" /></td><td>High</td></tr><tr><td style="text-align: center;"><img src="legend/Socioeconomicscoregroup_2_Nonrural3.png" /></td><td>Non-rural</td></tr></table>', layer: layer_Socioeconomicscoregroup_2},
             {label: 'High mental health risk & socioeconomic score<br /><table><tr><td style="text-align: center;"><img src="legend/Highmentalhealthrisksocioeconomicscore_1_Yes0.png" /></td><td>Yes</td></tr><tr><td style="text-align: center;"><img src="legend/Highmentalhealthrisksocioeconomicscore_1_No1.png" /></td><td>No</td></tr><tr><td style="text-align: center;"><img src="legend/Highmentalhealthrisksocioeconomicscore_1_Nonrural2.png" /></td><td>Non-rural</td></tr></table>', layer: layer_Highmentalhealthrisksocioeconomicscore_1},
-            {label: 'FQHC presence in county<br /><table><tr><td style="text-align: center;"><img src="legend/FQHCpresenceincounty_0_NoFQHC0.png" /></td><td>No FQHC</td></tr><tr><td style="text-align: center;"><img src="legend/FQHCpresenceincounty_0_FQHC1.png" /></td><td>FQHC</td></tr><tr><td style="text-align: center;"><img src="legend/FQHCpresenceincounty_0_Nonrural2.png" /></td><td>Non-rural</td></tr></table>', layer: layer_FQHCpresenceincounty_0},]
+            {label: 'FQHC site presence in county<br /><table><tr><td style="text-align: center;"><img src="legend/FQHCsitepresenceincounty_0_FQHCsite0.png" /></td><td>FQHC site</td></tr><tr><td style="text-align: center;"><img src="legend/FQHCsitepresenceincounty_0_NoFQHCsite1.png" /></td><td>No FQHC site</td></tr><tr><td style="text-align: center;"><img src="legend/FQHCsitepresenceincounty_0_Nonrural2.png" /></td><td>Non-rural</td></tr></table>', layer: layer_FQHCsitepresenceincounty_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
             //selectorBack: false,
@@ -851,68 +1066,16 @@
             }  
         });       
         setBounds();
-        var i = 0;
-        layer_FQHCpresenceincounty_0.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['NAME10'] !== null?String('<div style="color: #323232; font-size: 5pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAME10']).replace(/\\n/g, '<br>') + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_FQHCpresenceincounty_0'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        var i = 0;
-        layer_Highmentalhealthrisksocioeconomicscore_1.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['NAME10'] !== null?String('<div style="color: #323232; font-size: 5pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAME10']).replace(/\\n/g, '<br>') + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Highmentalhealthrisksocioeconomicscore_1'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        var i = 0;
-        layer_Socioeconomicscoregroup_2.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['NAME10'] !== null?String('<div style="color: #323232; font-size: 5pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAME10']).replace(/\\n/g, '<br>') + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Socioeconomicscoregroup_2'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        var i = 0;
-        layer_Mentalhealthriskscoregroup_3.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['NAME10'] !== null?String('<div style="color: #323232; font-size: 5pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['NAME10']).replace(/\\n/g, '<br>') + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Mentalhealthriskscoregroup_3'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
-        resetLabels([layer_FQHCpresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
+        resetLabels([layer_FQHCsitepresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
         map.on("zoomend", function(){
-            resetLabels([layer_FQHCpresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
+            resetLabels([layer_FQHCsitepresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_FQHCpresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
+            resetLabels([layer_FQHCsitepresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_FQHCpresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
+            resetLabels([layer_FQHCsitepresenceincounty_0,layer_Highmentalhealthrisksocioeconomicscore_1,layer_Socioeconomicscoregroup_2,layer_Mentalhealthriskscoregroup_3]);
         });
-        </script>
+        </script>        
     </body>
 </html>
